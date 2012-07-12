@@ -10,12 +10,14 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
+import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
 import org.eclipse.e4.ui.workbench.commands.internal.util.ModelUtil;
 import org.eclipse.e4.ui.workbench.commands.util.IE4WorkbenchCommandConstants;
@@ -83,7 +85,7 @@ public class E4PerspectiveSwitcherToolControl {
 	MToolControl toolControl;
 	
 	@Inject
-	private ISWTResourceUtilities resourceUtilities;
+	private IResourceUtilities resourceUtilities;
 	
 	//
 	static RGB defaultContainerCurveColor = new RGB(0, 0, 0);
@@ -342,7 +344,7 @@ public class E4PerspectiveSwitcherToolControl {
 	private Image getPerspectiveDialogImage() {
 		if (perspectiveDialogImage == null || perspectiveDialogImage.isDisposed()) {
 			ImageDescriptor descriptor = E4WBCommandsActivator
-					.imageDescriptorFromPlugin(E4WBCommandsActivator.PLUGIN_ID, "icons/full/eview16/new_persp.gef");//$NON-NLS-1$
+					.imageDescriptorFromPlugin(E4WBCommandsActivator.PLUGIN_ID, "icons/full/eview16/new_persp.gif");//$NON-NLS-1$
 
 			perspectiveDialogImage = descriptor.createImage();
 		}
@@ -365,15 +367,19 @@ public class E4PerspectiveSwitcherToolControl {
 		final ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
 		shortcut.setData(perspective);
 		
-		URI iconURI = URI.createURI(perspective.getIconURI());
-		Object _imag = resourceUtilities.imageDescriptorFromURI(iconURI).createImage();
+		String _uri = perspective.getIconURI();
+		ImageDescriptor descriptor = null;
 		
-		Image _ic = null;
-		if (_imag instanceof Image) 
-			_ic = (Image) _imag;
-		final Image icon = _ic; 
+		try {
+			URI iconURI = URI.createURI(_uri);
+			descriptor = (ImageDescriptor) resourceUtilities.imageDescriptorFromURI(iconURI);
+		} catch (RuntimeException ex) {
+			logger.error("E4PerspectiveSwitcher: uri=" + _uri);
+		}
 		
-		if (icon != null) {
+		if (descriptor != null) {
+			final Image icon = descriptor.createImage();
+			
 			shortcut.setImage(icon);
 			
 			shortcut.addDisposeListener(new DisposeListener() {
@@ -385,7 +391,7 @@ public class E4PerspectiveSwitcherToolControl {
 			});
 		}
 		
-		if (icon == null /*|| getShowTextPref == true*/) {
+		if (descriptor == null /*|| getShowTextPref == true*/) {
 			shortcut.setText(perspective.getLocalizedLabel());
 			shortcut.setToolTipText(perspective.getLocalizedTooltip());
 		} else {
