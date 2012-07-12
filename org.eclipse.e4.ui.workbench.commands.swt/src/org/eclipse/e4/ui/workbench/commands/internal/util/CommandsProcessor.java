@@ -14,10 +14,10 @@ public class CommandsProcessor {
 	public void execute() {
 		application.getCommands();
 		
-		 Reflections reflections = new Reflections("my.project.prefix");
+		 //Reflections reflections = new Reflections("my.project.prefix");
 
-		 Set<Class<? extends Object>> allClasses = 
-		     reflections.getSubTypesOf(Object.class);
+		 //Set<Class<? extends Object>> allClasses = 
+		   //  reflections.getSubTypesOf(Object.class);
 		
 	}
 	
