@@ -10,7 +10,6 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -22,7 +21,6 @@ import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
 import org.eclipse.e4.ui.workbench.commands.internal.util.ModelUtil;
 import org.eclipse.e4.ui.workbench.commands.util.IE4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.swt.util.ISWTResourceUtilities;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -85,7 +83,7 @@ public class E4PerspectiveSwitcherToolControl {
 	MToolControl toolControl;
 	
 	@Inject
-	private IResourceUtilities resourceUtilities;
+	private IResourceUtilities<?> resourceUtilities;
 	
 	//
 	static RGB defaultContainerCurveColor = new RGB(0, 0, 0);
