@@ -4,8 +4,11 @@
    <extension
          id="fragment"
          point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
       <processor
-            beforefragment="true"
+            beforefragment="false"
             class="org.eclipse.e4.ui.workbench.commands.util.CommandsProcessor">
       </processor>
    </extension>

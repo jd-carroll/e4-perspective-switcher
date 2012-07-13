@@ -10,14 +10,22 @@
  ******************************************************************************/ 
 package org.eclipse.e4.ui.workbench.ide.internal.dialogs;
 
+import java.util.Collections;
+import java.util.HashMap;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -45,6 +53,12 @@ public class SelectPerspectiveDialog extends Dialog implements
 
 	@Inject
 	private IEclipseContext context;
+	
+	@Inject
+	private ECommandService commandService;
+	
+	@Inject
+	private EHandlerService handlerService;
 	
 	@Inject
 	private MWindow window;
@@ -86,11 +100,11 @@ public class SelectPerspectiveDialog extends Dialog implements
      */
     @Override
     protected void configureShell(Shell shell) {
-        super.configureShell(shell);
         shell.setText("Open Perspective");
         // TODO: Set help context
         
         setBlockOnOpen(false);
+        super.configureShell(shell);
     }
 
     /**
@@ -156,7 +170,6 @@ public class SelectPerspectiveDialog extends Dialog implements
                 // 	viewer.addFilter(activityViewerFilter);
             }
         });
-
     }
 
     /**
@@ -169,8 +182,9 @@ public class SelectPerspectiveDialog extends Dialog implements
         viewer = new TableViewer(parent, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         viewer.getTable().setFont(parent.getFont());
         
-		viewer.setLabelProvider(new DelegatingLabelProviderWithTooltip(context.get(PerspectiveLabelProvider.class),
-				context.get(PerspectiveLabelDecorator.class)) {
+		viewer.setLabelProvider(new DelegatingLabelProviderWithTooltip(
+				ContextInjectionFactory.make(PerspectiveLabelProvider.class, context),
+				ContextInjectionFactory.make(PerspectiveLabelDecorator.class, context)) {
 			
 			@Override
 			protected Object unwrapElement(Object element) {
@@ -179,7 +193,8 @@ public class SelectPerspectiveDialog extends Dialog implements
 			}
 		});
         
-		viewer.setContentProvider(context.get(PerspectiveContentProvider.class));
+		viewer.setContentProvider(
+				ContextInjectionFactory.make(PerspectiveContentProvider.class, context));
         // list.addFilter(activityViewerFilter);
         viewer.setComparator(new ViewerComparator());
         viewer.setInput(window);
@@ -248,7 +263,15 @@ public class SelectPerspectiveDialog extends Dialog implements
      */
     @Override
     protected void okPressed() {
-    	// TODO: Rerun the handler with the parameters
+    	HashMap<String,String> parameters = new HashMap<String,String>(2);
+    	parameters.put(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_ID, 
+    			((MPerspective) selection).getElementId());
+    	parameters.put(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_NEWWINDOW,
+    			"false");
+    	
+		ParameterizedCommand command = commandService
+				.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, parameters);
+		handlerService.executeHandler(command);
     }
     
     /* (non-Javadoc)

@@ -67,6 +67,8 @@ public class CommandsProcessor {
 			createCommandFor(ShowPerspectiveCommand.class);
 			createHandlerFor(ShowPerspectiveHandler.class);
 			
+			System.out.println("Done");
+			
 		} catch (Exception ex) {
 			// do something
 		}
@@ -86,6 +88,8 @@ public class CommandsProcessor {
 			command.setElementId(_cmd.value());
 			command.setCommandName(_nm != null ? _nm.value() : null);
 			command.setDescription(_dsc != null ? _dsc.value() : null);
+			
+			
 			
 			Field[] fields = clazz.getFields();
 			for (int i=0; i<fields.length; i++) { 
@@ -152,13 +156,13 @@ public class CommandsProcessor {
 			handler.setElementId(_hlr.value());			
 			handler.setContributionURI(CONTRIBUTION_URI_PREFIX + instance_PLUGIN_ID + URI_SEPERATOR 
 					+ clazz.getCanonicalName());
-			handler.setObject(clazz);			
+			//handler.setObject(clazz);			
 			
 			MCommand command = null;
 			if (_cmd != null) {
 				List<MCommand> appCommands = application.getCommands();
 				for (int i=0; i<appCommands.size(); i++) {
-					if (appCommands.get(i).equals(_cmd.value())) {
+					if (appCommands.get(i).getElementId().equals(_cmd.value())) {
 						command = appCommands.get(i);
 						break;
 					}

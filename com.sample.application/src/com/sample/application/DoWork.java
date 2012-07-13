@@ -11,12 +11,18 @@
 package com.sample.application;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 public class DoWork {
+	
+	@Inject
+	private MApplication application;
+	
 	@PostConstruct
 	void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.None);
@@ -27,7 +33,7 @@ public class DoWork {
 	
 	@Focus
 	public void onFocus() {
-		//TODO Your code here
+		// TODO: Implement
 	}
 	
 	

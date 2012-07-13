@@ -16,6 +16,7 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -74,7 +75,7 @@ public final class ShowPerspectiveHandler {
 	 *             If the perspective could not be opened.
 	 */
 	private final void openSelectionDialog(IEclipseContext context) {
-		SelectPerspectiveDialog dialog = context.get(SelectPerspectiveDialog.class);
+		SelectPerspectiveDialog dialog = ContextInjectionFactory.make(SelectPerspectiveDialog.class, context);
 		dialog.open();
 	}
 

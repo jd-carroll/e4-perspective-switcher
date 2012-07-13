@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_AVqa4MvAEeGUOdx2iNCxwQ">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Hnx9oMvAEeGUOdx2iNCxwQ" featurename="children" parentElementId="org.eclipse.ui.main.toolbar">
-    <elements xsi:type="menu:ToolControl" xmi:id="_WDh1gMvAEeGUOdx2iNCxwQ" elementId="perspective.switcher" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.commands.swt/org.eclipse.e4.ui.workbench.ide.tools.E4PerspectiveSwitcherToolControl"/>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_AVqa4MvAEeGUOdx2iNCxwQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Cvtr4M0HEeG6GL6oNvg_7A" featurename="commands" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_GQ-MIM0HEeG6GL6oNvg_7A" elementId="com.sample.command.test" commandName="Test Command" description="Test description">
+      <parameters xmi:id="_IuRVAM0HEeG6GL6oNvg_7A" elementId="org.eclipse.e4.ui.workbench.commands.swt.commandparameter.0" name="testp"/>
+      <parameters xmi:id="_KuIgsM0XEeG6GL6oNvg_7A" elementId="org.eclipse.e4.ui.workbench.commands.swt.commandparameter.2" name="test.param2" typeId="string"/>
+    </elements>
+    <elements xsi:type="commands:Command" xmi:id="_QfSnAM0XEeG6GL6oNvg_7A" elementId="com.sample.command.test2" commandName="Test 2" description="test"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_KNu8oM0HEeG6GL6oNvg_7A" featurename="handlers" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_OAutIM0HEeG6GL6oNvg_7A" elementId="test.handler" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.commands.swt/org.eclipse.e4.ui.workbench.ide.handlers.ShowPerspectiveHandler" command="_GQ-MIM0HEeG6GL6oNvg_7A"/>
   </fragments>
 </fragment:ModelFragments>
