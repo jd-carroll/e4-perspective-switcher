@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
 import org.eclipse.e4.ui.workbench.commands.internal.util.ModelUtil;
+import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -365,8 +366,7 @@ public class E4PerspectiveSwitcherToolControl {
 	 */
 	private void openPerspectiveDialog() {
 		ParameterizedCommand command = commandService
-				// TODO: Remove dependency on org.eclipse.ui.workbench
-				.createCommand(IWorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, Collections.EMPTY_MAP);
+				.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, Collections.EMPTY_MAP);
 		handlerService.executeHandler(command);
 	}
 	

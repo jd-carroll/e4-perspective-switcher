@@ -13,4 +13,7 @@ package org.eclipse.e4.ui.workbench.ide.handlers;
 public class E4WorkbenchHandlerConstants {
 
 
+	public static final String PERSPECTIVES_SHOW_PERSPECTIVE = "org.eclipse.e4.ui.handlers.showperspective"; //$NON-NLS-1$
+	
+	
 }

@@ -26,8 +26,8 @@ import org.eclipse.e4.ui.workbench.commands.annotations.HandlerTags;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.internal.dialogs.SelectPerspectiveDialog;
 
-@Handler("some.handler.id")
-@HandlerCommand("some.referenced.command")
+@Handler(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
+@HandlerCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 public final class ShowPerspectiveHandler {
 	
 	@HandlerTags

@@ -49,8 +49,7 @@ public class CommandsProcessor {
 	@Inject
 	private MApplication application;
 
-	@Inject
-	private MCommandsFactory commandsFactory;
+	MCommandsFactory commandsFactory = MCommandsFactory.INSTANCE;
 
 	CommandsProcessor instance;
 	String instance_PLUGIN_ID = E4WBCommandsActivator.PLUGIN_ID;
