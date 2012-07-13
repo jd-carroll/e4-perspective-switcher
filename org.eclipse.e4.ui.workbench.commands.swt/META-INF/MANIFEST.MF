@@ -25,3 +25,4 @@ Export-Package: org.eclipse.e4.ui.workbench.commands.util,
  org.eclipse.e4.ui.workbench.ide.handlers,
  org.eclipse.e4.ui.workbench.ide.menus,
  org.eclipse.e4.ui.workbench.ide.tools
+Bundle-ClassPath: .

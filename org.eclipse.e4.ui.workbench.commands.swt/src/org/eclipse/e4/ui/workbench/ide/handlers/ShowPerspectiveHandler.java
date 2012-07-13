@@ -12,6 +12,7 @@
 package org.eclipse.e4.ui.workbench.ide.handlers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import javax.inject.Named;
 
@@ -20,11 +21,18 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.workbench.commands.annotations.Handler;
+import org.eclipse.e4.ui.workbench.commands.annotations.HandlerCommand;
+import org.eclipse.e4.ui.workbench.commands.annotations.HandlerPersistedState;
+import org.eclipse.e4.ui.workbench.commands.annotations.HandlerTags;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.internal.dialogs.SelectPerspectiveDialog;
 
-@Handler("")
+@Handler("some.handler.id")
+@HandlerCommand("some.referenced.command")
 public final class ShowPerspectiveHandler {
+	
+	@HandlerTags
+	String[] tags = {"tag1", "tag2"};
 
 	@Execute
 	public void execute(IEclipseContext context, 
@@ -39,7 +47,6 @@ public final class ShowPerspectiveHandler {
 		else
 			openPerspective(context, perspectiveID);
 	}
-
 
 	/**
 	 * Opens the specified perspective in a new window.
@@ -102,5 +109,11 @@ public final class ShowPerspectiveHandler {
 //		} catch (WorkbenchException e) {
 //			throw new ExecutionException("Perspective could not be opened.", e); //$NON-NLS-1$
 //		}
+	}
+	
+	@HandlerPersistedState
+	HashMap<String,String> retrievePersistedState() {
+		HashMap<String,String> def = new HashMap<String,String>(2);
+		return def;
 	}
 }
