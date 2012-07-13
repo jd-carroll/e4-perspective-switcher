@@ -85,8 +85,8 @@ public class CommandsProcessor {
 			
 			command.setContributorURI(CONTRIBUTOR_URI_PREFIX + instance_PLUGIN_ID);
 			command.setElementId(_cmd.value());
-			command.setCommandName(_nm != null ? _nm.value() : "");
-			command.setDescription(_dsc != null ? _dsc.value() : "");
+			command.setCommandName(_nm != null ? _nm.value() : null);
+			command.setDescription(_dsc != null ? _dsc.value() : null);
 			
 			Field[] fields = clazz.getFields();
 			for (int i=0; i<fields.length; i++) { 
@@ -105,10 +105,8 @@ public class CommandsProcessor {
 				MCategory category = commandsFactory.createCategory();
 				category.setElementId(method.getAnnotation(CommandCategory.class).value());
 				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, _void);
-				category.setName(def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) != null 
-						? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) : "");
-				category.setDescription(def.get(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION) != null
-						? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION) : "");
+				category.setName(def != null ? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) : null);
+				category.setDescription(def != null ? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION) : null);
 				
 				List<MCategory> appCategories = application.getCategories();
 				for (int i=0; i<appCategories.size(); i++) {
@@ -131,12 +129,9 @@ public class CommandsProcessor {
 					MCommandParameter parameter = commandsFactory.createCommandParameter();
 					parameter.setElementId(methods[i].getAnnotation(CommandParameters.class).value());
 					HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(clazz, _void);
-					parameter.setName(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) != null 
-							? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) : "");
-					parameter.setTypeId(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID) != null 
-							? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID) : "");
-					parameter.setOptional(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_OPTIONAL) != null 
-							? Boolean.parseBoolean(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID)) : false);
+					parameter.setName(def != null ? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) : null);
+					parameter.setTypeId(def != null ? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID) : null);
+					parameter.setOptional(def != null ? Boolean.parseBoolean(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID)) : false);
 					
 					command.getParameters().add(parameter);					
 				}
@@ -155,16 +150,19 @@ public class CommandsProcessor {
 			MHandler handler = commandsFactory.createHandler();
 			
 			handler.setContributorURI(CONTRIBUTOR_URI_PREFIX + instance_PLUGIN_ID);
+			handler.setElementId(_hlr.value());			
 			handler.setContributionURI(CONTRIBUTION_URI_PREFIX + instance_PLUGIN_ID + URI_SEPERATOR 
 					+ clazz.getCanonicalName());
-			handler.setElementId(_hlr.value());
+			handler.setObject(clazz);			
 			
 			MCommand command = null;
-			List<MCommand> appCommands = application.getCommands();
-			for (int i=0; i<appCommands.size(); i++) {
-				if (appCommands.get(i).equals(_cmd.value())) {
-					command = appCommands.get(i);
-					break;
+			if (_cmd != null) {
+				List<MCommand> appCommands = application.getCommands();
+				for (int i=0; i<appCommands.size(); i++) {
+					if (appCommands.get(i).equals(_cmd.value())) {
+						command = appCommands.get(i);
+						break;
+					}
 				}
 			}
 			handler.setCommand(command);
@@ -190,4 +188,5 @@ public class CommandsProcessor {
 			application.getHandlers().add(handler);
 		}
 	}
+	
 }
