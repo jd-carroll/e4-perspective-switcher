@@ -29,7 +29,6 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
 import org.eclipse.e4.ui.workbench.commands.internal.util.ModelUtil;
-import org.eclipse.e4.ui.workbench.commands.util.IE4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;

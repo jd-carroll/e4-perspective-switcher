@@ -8,9 +8,9 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.commands.util;
+package org.eclipse.e4.ui.workbench.ide.handlers;
 
-public class CommandLoader {
+public class E4WorkbenchHandlerConstants {
 
 
 }

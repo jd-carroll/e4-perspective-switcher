@@ -36,11 +36,16 @@ import org.eclipse.e4.ui.workbench.commands.annotations.Handler;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerCommand;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerPersistedState;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerTags;
+import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
 import org.eclipse.e4.ui.workbench.ide.commands.ShowPerspectiveCommand;
 import org.eclipse.e4.ui.workbench.ide.handlers.ShowPerspectiveHandler;
 
 public class CommandsProcessor {
 
+	final String CONTRIBUTION_URI_PREFIX = "bundleclass://"; //$NON-NLS-1$
+	final String CONTRIBUTOR_URI_PREFIX = "platform:/plugin/"; //$NON-NLS-1$
+	final String URI_SEPERATOR = "/"; //$NON-NLS-1$
+	
 	@Inject
 	private MApplication application;
 
@@ -48,6 +53,9 @@ public class CommandsProcessor {
 	private MCommandsFactory commandsFactory;
 
 	CommandsProcessor instance;
+	String instance_PLUGIN_ID = E4WBCommandsActivator.PLUGIN_ID;
+	
+	final Object[] _void = new Object[] {};
 
 	@Inject
 	public CommandsProcessor() {
@@ -63,12 +71,6 @@ public class CommandsProcessor {
 		} catch (Exception ex) {
 			// do something
 		}
-		
-
-		//Reflections reflections = new Reflections("my.project.prefix");
-
-		//Set<Class<? extends Object>> allClasses = 
-		//  reflections.getSubTypesOf(Object.class);
 
 	}
 
@@ -81,6 +83,7 @@ public class CommandsProcessor {
 		if (_cmd != null && !_cmd.value().equals("")) {
 			MCommand command = commandsFactory.createCommand();
 			
+			command.setContributorURI(CONTRIBUTOR_URI_PREFIX + instance_PLUGIN_ID);
 			command.setElementId(_cmd.value());
 			command.setCommandName(_nm != null ? _nm.value() : "");
 			command.setDescription(_dsc != null ? _dsc.value() : "");
@@ -101,7 +104,7 @@ public class CommandsProcessor {
 				
 				MCategory category = commandsFactory.createCategory();
 				category.setElementId(method.getAnnotation(CommandCategory.class).value());
-				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, new Object[] {});
+				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, _void);
 				category.setName(def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) != null 
 						? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) : "");
 				category.setDescription(def.get(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION) != null
@@ -127,7 +130,7 @@ public class CommandsProcessor {
 					
 					MCommandParameter parameter = commandsFactory.createCommandParameter();
 					parameter.setElementId(methods[i].getAnnotation(CommandParameters.class).value());
-					HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(clazz, new Object[] {});
+					HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(clazz, _void);
 					parameter.setName(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) != null 
 							? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) : "");
 					parameter.setTypeId(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID) != null 
@@ -151,6 +154,9 @@ public class CommandsProcessor {
 		if (_hlr != null && !_hlr.value().equals("")) {
 			MHandler handler = commandsFactory.createHandler();
 			
+			handler.setContributorURI(CONTRIBUTOR_URI_PREFIX + instance_PLUGIN_ID);
+			handler.setContributionURI(CONTRIBUTION_URI_PREFIX + instance_PLUGIN_ID + URI_SEPERATOR 
+					+ clazz.getCanonicalName());
 			handler.setElementId(_hlr.value());
 			
 			MCommand command = null;
@@ -177,7 +183,7 @@ public class CommandsProcessor {
 						method = methods[i];
 				}
 				
-				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, new Object[] {});
+				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, _void);
 				handler.getPersistedState().putAll(def);
 			}
 			

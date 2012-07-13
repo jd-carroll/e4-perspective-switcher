@@ -20,7 +20,7 @@ import org.eclipse.e4.ui.workbench.commands.annotations.CommandParameters;
 import org.eclipse.e4.ui.workbench.commands.annotations.CommandTags;
 import org.eclipse.e4.ui.workbench.commands.util.E4WorkbenchConstants;
 
-@Command("")
+@Command(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 @CommandName("")
 @CommandDescription("")
 public class ShowPerspectiveCommand {
