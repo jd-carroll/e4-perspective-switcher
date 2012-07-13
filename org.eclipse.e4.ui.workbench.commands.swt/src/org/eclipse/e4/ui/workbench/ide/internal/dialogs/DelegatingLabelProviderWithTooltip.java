@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Joseph Carroll - Updated for Eclipse4
+ *     Joseph Carroll <jdsalingerjr@gmail.com> - Updated for Eclipse4
  *******************************************************************************/
 package org.eclipse.e4.ui.workbench.ide.internal.dialogs;
 
