@@ -3,6 +3,7 @@ package org.eclipse.e4.ui.workbench.ide.bindings;
 import org.eclipse.e4.ui.workbench.annotations.bindings.KeyBinding;
 import org.eclipse.e4.ui.workbench.annotations.bindings.KeyBindingCommand;
 import org.eclipse.e4.ui.workbench.annotations.bindings.KeyBindingSequence;
+import org.eclipse.e4.ui.workbench.annotations.bindings.KeyBindingTable;
 import org.eclipse.e4.ui.workbench.annotations.bindings.KeyBindingTags;
 import org.eclipse.e4.ui.workbench.annotations.parameters.Parameter;
 import org.eclipse.e4.ui.workbench.annotations.parameters.ParameterName;
@@ -12,6 +13,7 @@ import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 
 @KeyBinding(E4WorkbenchBindingConstants.KEY_BINDING_SHOW_PERSPECTIVE)
+@KeyBindingTable(E4WorkbenchBindingConstants.BINDING_TABLE_SAMPLE)
 @KeyBindingSequence("M1+M3+P")
 @KeyBindingCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 public class ShowPerspectiveBinding {

@@ -18,17 +18,19 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MBindingTable;
+
 /**
- * Use this annotation to define the binding's key sequence. The annotation's value must 
- * have each key separated by a '<code>+</code>' without any whitespace.
+ * Use this annotation to define the key-binding's associated {@link MBindingTable}. The annotation's value
+ * must return the associated binding table id. 
  * @see KeyBinding
- * @required The key sequence is a required value.
+ * @required The binding table id is a required value.
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KeyBindingSequence {
-	// the key sequence
+public @interface KeyBindingTable {
+	// the binding table id
 	String value() default "";
 }

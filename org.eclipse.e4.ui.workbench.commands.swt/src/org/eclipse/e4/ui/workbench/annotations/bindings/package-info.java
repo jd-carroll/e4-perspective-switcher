@@ -9,7 +9,7 @@
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
 /**
- * This package defines annotations for the creation of {@link MBindingTable}'s
+ * This package defines annotations for the creation of {@link MBindingContext}'s, {@link MBindingTable}'s,
  * and {@link MKeyBinding}'s programmatically through the use of {@link CommandsProcessor}.
  * @author Joseph Carroll
  */

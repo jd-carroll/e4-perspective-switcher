@@ -18,17 +18,18 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MBindingContext;
+
 /**
- * Use this annotation to define the binding's key sequence. The annotation's value must 
- * have each key separated by a '<code>+</code>' without any whitespace.
- * @see KeyBinding
- * @required The key sequence is a required value.
+ * Use this annotation to define a {@link MBindingContext}'s parent context. The annotation
+ * returns the id of the parent context.
+ * @see BindingContext
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KeyBindingSequence {
-	// the key sequence
-	String value() default "";
+public @interface BindingContextParent {
+	// the binding context parent id
+	String value() default ""; 
 }

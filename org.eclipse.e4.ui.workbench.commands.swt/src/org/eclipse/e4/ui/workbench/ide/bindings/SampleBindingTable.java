@@ -5,7 +5,7 @@ import org.eclipse.e4.ui.workbench.annotations.bindings.BindingTableContext;
 import org.eclipse.e4.ui.workbench.annotations.bindings.BindingTableTags;
 
 @BindingTable(E4WorkbenchBindingConstants.BINDING_TABLE_SAMPLE)
-@BindingTableContext
+@BindingTableContext(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE)
 public class SampleBindingTable {
 
 	@BindingTableTags

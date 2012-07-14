@@ -18,17 +18,22 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MBindingContext;
+
 /**
- * Use this annotation to define the binding's key sequence. The annotation's value must 
- * have each key separated by a '<code>+</code>' without any whitespace.
- * @see KeyBinding
- * @required The key sequence is a required value.
+ * Use this annotation to tag types that define an application {@link MBindingContext}. The annotation's
+ * value must return the binding-context's id, otherwise the context is not created.
+ * @see BindingContextDescription
+ * @see BindingContextName
+ * @see BindingContextParent
+ * @see BindingContextTags
+ * @required The ID is a required value.
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KeyBindingSequence {
-	// the key sequence
-	String value() default "";
+public @interface BindingContext {
+	// the binding context ID
+	String value() default ""; 
 }

@@ -18,17 +18,22 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MBindingTable;
+
 /**
- * Use this annotation to define the binding's key sequence. The annotation's value must 
- * have each key separated by a '<code>+</code>' without any whitespace.
- * @see KeyBinding
- * @required The key sequence is a required value.
+ * Use this annotation to tag fields that define tags for a {@link MBindingTable}. The tagged field
+ * must be of type <code>String[]</code>. 
+ * <p>
+ * This annotation must not be applied to more than one method per class. If several class
+ * fields are tagged with this annotation, only one of them will be used.
+ * </p>
+ * @see BindingTable
  */
 @Qualifier
 @Documented
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KeyBindingSequence {
-	// the key sequence
+public @interface BindingContextTags {
+	// reserved for future use
 	String value() default "";
 }
