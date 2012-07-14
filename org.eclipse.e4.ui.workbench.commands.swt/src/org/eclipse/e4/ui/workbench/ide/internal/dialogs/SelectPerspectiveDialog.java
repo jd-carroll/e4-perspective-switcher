@@ -272,6 +272,7 @@ public class SelectPerspectiveDialog extends Dialog implements
 		ParameterizedCommand command = commandService
 				.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, parameters);
 		handlerService.executeHandler(command);
+		super.okPressed();
     }
     
     /* (non-Javadoc)

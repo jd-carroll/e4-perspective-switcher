@@ -24,12 +24,12 @@ import org.eclipse.e4.ui.workbench.commands.util.E4WorkbenchConstants;
 @CommandName("Show Perspective")
 @CommandDescription("Opens a new perspective or perspective dialog")
 public class ShowPerspectiveCommand {
-
+	
 	@CommandTags
-	String[] tags = {"tag1", "tag2"}; 
+	public String[] tags = {"tag1", "tag2"}; 
 	
 	@CommandCategory("some.id")
-	HashMap<String,String> setCategory() {
+	public HashMap<String,String> setCategory() {
 		HashMap<String,String> def = new HashMap<String,String>(2);
 		def.put(E4WorkbenchConstants.COMMAND_CATEGORY_NAME, "some name");
 		def.put(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION, "some description");
@@ -37,19 +37,19 @@ public class ShowPerspectiveCommand {
 	}
 	
 	@CommandParameters(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_ID)
-	HashMap<String,String> setFirstParameter() {
+	public HashMap<String,String> setFirstParameter() {
 		HashMap<String,String> def = new HashMap<String,String>(3);
 		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_NAME, "Perspective ID");
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, "string");
+		//def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, ... );
 		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_OPTIONAL, "false");
 		return def;
 	}
 	
 	@CommandParameters(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_NEWWINDOW)
-	HashMap<String,String> setSecondParameter() {
+	public HashMap<String,String> setSecondParameter() {
 		HashMap<String,String> def = new HashMap<String,String>(3);
 		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_NAME, "Open in New Window");
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, "string");
+		//def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, ... );
 		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_OPTIONAL, "false");
 		return def;
 	}

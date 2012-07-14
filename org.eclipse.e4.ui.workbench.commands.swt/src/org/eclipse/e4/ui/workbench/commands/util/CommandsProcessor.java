@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.commands.MCategory;
@@ -64,8 +65,9 @@ public class CommandsProcessor {
 	@Execute
 	public void execute() {
 		try {
-			createCommandFor(ShowPerspectiveCommand.class);
-			createHandlerFor(ShowPerspectiveHandler.class);
+			createHandlerFor(ShowPerspectiveHandler.class, 
+					createCommandFor(ShowPerspectiveCommand.class));
+
 			
 			System.out.println("Done");
 			
@@ -76,7 +78,7 @@ public class CommandsProcessor {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void createCommandFor(Class<?> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {		
+	public <T> MCommand createCommandFor(Class<T> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Command _cmd = clazz.getAnnotation(Command.class);
 		CommandName _nm = clazz.getAnnotation(CommandName.class);
 		CommandDescription _dsc = clazz.getAnnotation(CommandDescription.class);
@@ -89,25 +91,27 @@ public class CommandsProcessor {
 			command.setCommandName(_nm != null ? _nm.value() : null);
 			command.setDescription(_dsc != null ? _dsc.value() : null);
 			
+			T implementationClass = ContextInjectionFactory.make(clazz, application.getContext());
+			Class<T> objectClass = (Class<T>) implementationClass.getClass();
 			
-			
-			Field[] fields = clazz.getFields();
+			Field[] fields = objectClass.getDeclaredFields();
 			for (int i=0; i<fields.length; i++) { 
 				if (fields[i].isAnnotationPresent(CommandTags.class))
-					command.getTags().addAll(Arrays.asList((String[]) fields[i].get(clazz)));
+					command.getTags().addAll(Arrays.asList((String[]) fields[i].get(implementationClass)));
 			}
-					
-			if (clazz.getAnnotation(CommandCategory.class) != null) {
+				
+			//
+			{
 				Method method = null;
-				Method[] methods = clazz.getDeclaredMethods();
-				for (int i=0; i<methods.length; i++) {
+				Method[] methods = objectClass.getDeclaredMethods();
+				for (int i=0; i<methods.length && method==null; i++) {
 					if (methods[i].isAnnotationPresent(CommandCategory.class))
 						method = methods[i];
 				}
 				
 				MCategory category = commandsFactory.createCategory();
 				category.setElementId(method.getAnnotation(CommandCategory.class).value());
-				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, _void);
+				HashMap<String,String> def = (HashMap<String,String>) method.invoke(implementationClass, _void);
 				category.setName(def != null ? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_NAME) : null);
 				category.setDescription(def != null ? def.get(E4WorkbenchConstants.COMMAND_CATEGORY_DESCRIPTION) : null);
 				
@@ -123,15 +127,16 @@ public class CommandsProcessor {
 				application.getCategories().add(category);
 			}
 			
-			if (clazz.getAnnotation(CommandParameters.class) != null) {
-				Method[] methods = clazz.getDeclaredMethods();
+			//
+			{
+				Method[] methods = objectClass.getDeclaredMethods();
 				for (int i=0; i<methods.length; i++) {
 					if (!methods[i].isAnnotationPresent(CommandParameters.class))
 						continue;
 					
 					MCommandParameter parameter = commandsFactory.createCommandParameter();
 					parameter.setElementId(methods[i].getAnnotation(CommandParameters.class).value());
-					HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(clazz, _void);
+					HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(implementationClass, _void);
 					parameter.setName(def != null ? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_NAME) : null);
 					parameter.setTypeId(def != null ? def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID) : null);
 					parameter.setOptional(def != null ? Boolean.parseBoolean(def.get(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID)) : false);
@@ -141,11 +146,21 @@ public class CommandsProcessor {
 			}
 
 			application.getCommands().add(command);
+			return command;
 		}
+		return null;
 	}
 
+	public <T> MHandler createHandlerFor(Class<T> clazz, MCommand command) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return internalCreateFor(clazz, command, false);
+	}
+	
+	public <T> MHandler createHandlerFor(Class<T> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return internalCreateFor(clazz, null, true);
+	}
+	
 	@SuppressWarnings("unchecked")
-	public void createHandlerFor(Class<?> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	private <T> MHandler internalCreateFor(Class<T> clazz, MCommand command, boolean doSearch) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Handler _hlr = clazz.getAnnotation(Handler.class);
 		HandlerCommand _cmd = clazz.getAnnotation(HandlerCommand.class);
 		
@@ -155,41 +170,47 @@ public class CommandsProcessor {
 			handler.setContributorURI(CONTRIBUTOR_URI_PREFIX + instance_PLUGIN_ID);
 			handler.setElementId(_hlr.value());			
 			handler.setContributionURI(CONTRIBUTION_URI_PREFIX + instance_PLUGIN_ID + URI_SEPERATOR 
-					+ clazz.getCanonicalName());
-			//handler.setObject(clazz);			
+					+ clazz.getCanonicalName());	
 			
-			MCommand command = null;
-			if (_cmd != null) {
-				List<MCommand> appCommands = application.getCommands();
-				for (int i=0; i<appCommands.size(); i++) {
-					if (appCommands.get(i).getElementId().equals(_cmd.value())) {
-						command = appCommands.get(i);
-						break;
-					}
-				}
-			}
+			if (command == null && doSearch)
+				if (_cmd != null && !_cmd.value().equals(""))
+					command = internalDoSearch(_cmd.value());
 			handler.setCommand(command);
+
+			T implementationClass = ContextInjectionFactory.make(clazz, application.getContext());
+			Class<T> objectClass = (Class<T>) implementationClass.getClass();
 			
-			Field[] fields = clazz.getFields();
+			Field[] fields = objectClass.getDeclaredFields();
 			for (int i=0; i<fields.length; i++) { 
 				if (fields[i].isAnnotationPresent(HandlerTags.class))
-					handler.getTags().addAll(Arrays.asList((String[]) fields[i].get(clazz)));
+					handler.getTags().addAll(Arrays.asList((String[]) fields[i].get(implementationClass)));
 			}
 			
-			if (clazz.getAnnotation(HandlerPersistedState.class) != null) {
-				Method method = null;
-				Method[] methods = clazz.getDeclaredMethods();
-				for (int i=0; i<methods.length; i++) {
-					if (methods[i].isAnnotationPresent(HandlerPersistedState.class))
-						method = methods[i];
-				}
-				
-				HashMap<String,String> def = (HashMap<String,String>) method.invoke(clazz, _void);
-				handler.getPersistedState().putAll(def);
+			//
+			{
+				Method[] methods = objectClass.getDeclaredMethods();
+				for (int i=0; i<methods.length; i++)
+					if (methods[i].isAnnotationPresent(HandlerPersistedState.class)) {
+						HashMap<String,String> def = (HashMap<String,String>) methods[i].invoke(implementationClass, _void);
+						handler.getPersistedState().putAll(def);
+						break;
+					}
 			}
 			
 			application.getHandlers().add(handler);
+			return handler;
 		}
+		return null;
 	}
 	
+	private MCommand internalDoSearch(final String commandID) {
+		MCommand command = null;
+		List<MCommand> appCommands = application.getCommands();
+		for (int i=0; i<appCommands.size(); i++)
+			if (appCommands.get(i).getElementId().equals(commandID)) {
+				command = appCommands.get(i);
+				break;
+			}
+		return command;
+	}
 }

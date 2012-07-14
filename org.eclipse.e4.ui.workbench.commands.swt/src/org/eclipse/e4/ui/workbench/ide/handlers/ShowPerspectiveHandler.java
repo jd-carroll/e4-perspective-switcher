@@ -12,6 +12,7 @@ package org.eclipse.e4.ui.workbench.ide.handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -20,19 +21,25 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.commands.annotations.Handler;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerCommand;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerPersistedState;
 import org.eclipse.e4.ui.workbench.commands.annotations.HandlerTags;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.internal.dialogs.SelectPerspectiveDialog;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 @Handler(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 @HandlerCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 public final class ShowPerspectiveHandler {
 	
 	@HandlerTags
-	String[] tags = {"tag1", "tag2"};
+	public String[] tags = {"tag1", "tag2"};
 
 	@Execute
 	public void execute(IEclipseContext context, 
@@ -57,15 +64,12 @@ public final class ShowPerspectiveHandler {
 	 *             If the perspective could not be opened.
 	 */
 	private void openNewWindowPerspective(IEclipseContext context, String perspectiveID) {
-//		final IWorkbench workbench = PlatformUI.getWorkbench();
-//		try {
-//			IAdaptable input = ((Workbench) workbench).getDefaultPageInput();
-//			workbench.openWorkbenchWindow(perspectiveId, input);
-//		} catch (WorkbenchException e) {
-//			ErrorDialog.openError(activeWorkbenchWindow.getShell(),
-//					WorkbenchMessages.ChangeToPerspectiveMenu_errorTitle, e
-//							.getMessage(), e.getStatus());
-//		}
+		MApplication application = context.get(MApplication.class);
+		EPartService partService = context.get(EPartService.class);
+		EModelService modelService = context.get(EModelService.class);
+		
+		List<MPerspective> perspectives = modelService.findElements(application, perspectiveID, MPerspective.class, null);
+		partService.switchPerspective(perspectives.get(0));
 	}
 
 	/**
@@ -88,31 +92,16 @@ public final class ShowPerspectiveHandler {
 	 *             If the perspective could not be opened.
 	 */
 	private final void openPerspective(IEclipseContext context, String perspectiveID) {
-//		final IWorkbench workbench = PlatformUI.getWorkbench();
-//
-//		final IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
-//		IPerspectiveDescriptor desc = activeWorkbenchWindow.getWorkbench()
-//				.getPerspectiveRegistry().findPerspectiveWithId(perspectiveId);
-//		if (desc == null) {
-//			throw new ExecutionException("Perspective " + perspectiveId //$NON-NLS-1$
-//					+ " cannot be found."); //$NON-NLS-1$
-//		}
-//
-//		try {
-//			if (activePage != null) {
-//				activePage.setPerspective(desc);
-//			} else {
-//				IAdaptable input = ((Workbench) workbench)
-//						.getDefaultPageInput();
-//				activeWorkbenchWindow.openPage(perspectiveId, input);
-//			}
-//		} catch (WorkbenchException e) {
-//			throw new ExecutionException("Perspective could not be opened.", e); //$NON-NLS-1$
-//		}
+		MApplication application = context.get(MApplication.class);
+		EPartService partService = context.get(EPartService.class);
+		EModelService modelService = context.get(EModelService.class);
+		
+		List<MPerspective> perspectives = modelService.findElements(application, perspectiveID, MPerspective.class, null);
+		partService.switchPerspective(perspectives.get(0));
 	}
 	
 	@HandlerPersistedState
-	HashMap<String,String> retrievePersistedState() {
+	public HashMap<String,String> retrievePersistedState() {
 		HashMap<String,String> def = new HashMap<String,String>(2);
 		return def;
 	}
