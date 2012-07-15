@@ -10,16 +10,17 @@
  ******************************************************************************/ 
 package org.eclipse.e4.ui.workbench.ide.commands;
 
-import java.util.HashMap;
-
 import org.eclipse.e4.ui.workbench.annotations.commands.Command;
 import org.eclipse.e4.ui.workbench.annotations.commands.CommandCategory;
 import org.eclipse.e4.ui.workbench.annotations.commands.CommandDescription;
 import org.eclipse.e4.ui.workbench.annotations.commands.CommandName;
 import org.eclipse.e4.ui.workbench.annotations.commands.CommandTags;
 import org.eclipse.e4.ui.workbench.annotations.parameters.CommandParameter;
-import org.eclipse.e4.ui.workbench.commands.util.E4WorkbenchConstants;
+import org.eclipse.e4.ui.workbench.annotations.parameters.CommandParameterName;
+import org.eclipse.e4.ui.workbench.annotations.parameters.CommandParameterOptional;
+import org.eclipse.e4.ui.workbench.annotations.parameters.CommandParameterTags;
 import org.eclipse.e4.ui.workbench.ide.categories.E4WorkbenchCategoryConstants;
+import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 
 @Command(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
 @CommandName(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP)
@@ -30,22 +31,17 @@ public class ShowPerspectiveCommand {
 	@CommandTags
 	public String[] tags = {"tag1", "tag2"}; 
 	
-	@CommandParameter(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_ID)
-	public HashMap<String,String> setFirstParameter() {
-		HashMap<String,String> def = new HashMap<String,String>(3);
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_NAME, "Perspective ID");
-		//def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, ... );
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_OPTIONAL, "false");
-		return def;
-	}
+	@CommandParameter(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID)
+	@CommandParameterName(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID$_NAME)
+	//@CommandParameterType(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID$_TYPE)
+	@CommandParameterOptional(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID$_OPTION)
+	@CommandParameterTags
+	public String[] param1_tags = {"tag1", "tag2"};
 	
-	@CommandParameter(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_WINDOW)
-	public HashMap<String,String> setSecondParameter() {
-		HashMap<String,String> def = new HashMap<String,String>(3);
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_NAME, "Open in New Window");
-		//def.put(E4WorkbenchConstants.COMMAND_PARAMETER_TYPEID, ... );
-		def.put(E4WorkbenchConstants.COMMAND_PARAMETER_OPTIONAL, "false");
-		return def;
-	}
-	
+	@CommandParameter(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW)
+	@CommandParameterName(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW$_NAME)
+	//@CommandParameterType(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW$_TYPE)
+	@CommandParameterOptional(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW$_OPTION)
+	@CommandParameterTags
+	public String[] param2_tags = {"tag1", "tag2"};
 }
