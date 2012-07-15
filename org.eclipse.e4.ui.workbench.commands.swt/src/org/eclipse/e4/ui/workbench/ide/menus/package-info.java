@@ -8,8 +8,4 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-/**
- * @author Joseph Carroll
- *
- */
 package org.eclipse.e4.ui.workbench.ide.menus;

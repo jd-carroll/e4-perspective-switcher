@@ -8,4 +8,4 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.ide.commands;
+package org.eclipse.e4.ui.workbench.ide.internal.dialogs;

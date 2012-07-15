@@ -13,6 +13,7 @@ package org.eclipse.e4.ui.workbench.ide.handlers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -23,12 +24,10 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
-import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
-import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
-import org.eclipse.e4.ui.workbench.commands.annotations.Handler;
-import org.eclipse.e4.ui.workbench.commands.annotations.HandlerCommand;
-import org.eclipse.e4.ui.workbench.commands.annotations.HandlerPersistedState;
-import org.eclipse.e4.ui.workbench.commands.annotations.HandlerTags;
+import org.eclipse.e4.ui.workbench.annotations.handlers.Handler;
+import org.eclipse.e4.ui.workbench.annotations.handlers.HandlerCommand;
+import org.eclipse.e4.ui.workbench.annotations.handlers.HandlerPersistedState;
+import org.eclipse.e4.ui.workbench.annotations.handlers.HandlerTags;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.internal.dialogs.SelectPerspectiveDialog;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -43,8 +42,8 @@ public final class ShowPerspectiveHandler {
 
 	@Execute
 	public void execute(IEclipseContext context, 
-			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_ID) String perspectiveID,
-			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_NEWWINDOW) String newWindow) 
+			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_ID) String perspectiveID,
+			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_WINDOW) String newWindow) 
 					throws InvocationTargetException, InterruptedException {
 		
 		if (perspectiveID == null || perspectiveID.equals("")) 
@@ -101,7 +100,7 @@ public final class ShowPerspectiveHandler {
 	}
 	
 	@HandlerPersistedState
-	public HashMap<String,String> retrievePersistedState() {
+	public Map<String,String> retrievePersistedState() {
 		HashMap<String,String> def = new HashMap<String,String>(2);
 		return def;
 	}

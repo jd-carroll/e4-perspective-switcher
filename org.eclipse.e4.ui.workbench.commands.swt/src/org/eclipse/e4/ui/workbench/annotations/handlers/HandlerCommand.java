@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.commands.annotations;
+package org.eclipse.e4.ui.workbench.annotations.handlers;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,17 +18,18 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MHandler;
+
 /**
- * Specifies that the target is a command handler.  You must specify a 
- * handler id in the value.
- * 
- * @author jcarroll
- *
+ * Use this annotation to define a {@link MHandler}'s associated command. The annotation
+ * returns the id of the command.
+ * @see Handler
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Handler {
-	String value() default ""; // the handler ID
+public @interface HandlerCommand {
+	// the handler command id
+	String value() default "";
 }
