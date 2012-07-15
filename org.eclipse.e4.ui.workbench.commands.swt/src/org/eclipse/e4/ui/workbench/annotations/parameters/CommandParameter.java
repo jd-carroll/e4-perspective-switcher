@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.annotations.bindings;
+package org.eclipse.e4.ui.workbench.annotations.parameters;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,22 +18,23 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import org.eclipse.e4.ui.model.application.commands.MBindingTable;
+import org.eclipse.e4.ui.model.application.commands.MCommandParameter;
 
 /**
- * Use this annotation to tag fields that define tags for a {@link MBindingTable}. The tagged field
- * must be of type <code>String[]</code>. 
- * <p>
- * This annotation must not be applied to more than one field per class. If several class
- * fields are tagged with this annotation, only one of them will be used.
- * </p>
- * @see BindingTable
+ * Use this annotation to tag element types that define a {@link MCommandParameter}. The element type
+ * may be either a <tt>CLASS</tt> or <tt>FIELD</tt> type. The annotation's value must 
+ * return the parameter's id, otherwise the parameter is not created.  
+ * @see CommandParameterName
+ * @see CommandParameterOptional
+ * @see CommandParameterTags
+ * @see CommandParameterType
+ * @required The ID is a required value.
  */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BindingContextTags {
-	// reserved for future use
+public @interface CommandParameter {
+	// the command parameter id
 	String value() default "";
 }

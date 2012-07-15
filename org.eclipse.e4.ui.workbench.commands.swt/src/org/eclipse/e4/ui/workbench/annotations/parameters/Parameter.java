@@ -27,6 +27,7 @@ import org.eclipse.e4.ui.model.application.commands.MParameter;
  * @see ParameterName
  * @see ParameterTags
  * @see ParameterValue
+ * @required The ID is a required value.
  */
 @Qualifier
 @Documented

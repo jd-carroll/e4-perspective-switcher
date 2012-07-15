@@ -8,8 +8,9 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-/**
- * @author Joseph Carroll
- *
- */
 package org.eclipse.e4.ui.workbench.annotations.categories;
+/**
+ * This package defines annotations for the creation of {@link MCategory}'s
+ * programmatically through the use of {@link CommandsProcessor}.
+ * @author Joseph Carroll
+ */

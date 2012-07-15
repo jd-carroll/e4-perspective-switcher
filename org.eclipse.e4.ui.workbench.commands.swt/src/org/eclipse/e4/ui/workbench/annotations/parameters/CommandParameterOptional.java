@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.annotations.bindings;
+package org.eclipse.e4.ui.workbench.annotations.parameters;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,22 +18,18 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import org.eclipse.e4.ui.model.application.commands.MBindingTable;
+import org.eclipse.e4.ui.model.application.commands.MCommandParameter;
 
 /**
- * Use this annotation to tag fields that define tags for a {@link MBindingTable}. The tagged field
- * must be of type <code>String[]</code>. 
- * <p>
- * This annotation must not be applied to more than one field per class. If several class
- * fields are tagged with this annotation, only one of them will be used.
- * </p>
- * @see BindingTable
+ * Use this annotation to tag element types that define whether the {@link MCommandParameter} is an optional
+ * value. The element type may be either a <code>CLASS</code> or <code>FIELD</code> type. The annotation's 
+ * value returns the optionality.  
+ * @see CommandParameter
  */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BindingContextTags {
-	// reserved for future use
-	String value() default "";
+public @interface CommandParameterOptional {
+	boolean value() default false;
 }

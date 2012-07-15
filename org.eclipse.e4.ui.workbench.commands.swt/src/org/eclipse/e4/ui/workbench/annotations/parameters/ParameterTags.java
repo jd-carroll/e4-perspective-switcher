@@ -24,7 +24,7 @@ import org.eclipse.e4.ui.model.application.commands.MParameter;
  * Use this annotation to tag fields that define tags for a {@link MParameter}. The tagged field
  * must be of type <code>String[]</code>. 
  * <p>
- * This annotation must not be applied to more than one method per class. If several class
+ * This annotation must not be applied to more than one field per class. If several class
  * fields are tagged with this annotation, only one of them will be used.
  * </p>
  * @see Parameter

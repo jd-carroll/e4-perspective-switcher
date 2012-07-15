@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.commands.annotations;
+package org.eclipse.e4.ui.workbench.annotations.commands;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,10 +18,18 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MCommand;
+
+/**
+ * Use this annotation to define a {@link MCommand}'s parent category. The annotation
+ * returns the id of the parent category.
+ * @see Command
+ */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CommandTags {
-	
+public @interface CommandCategory {
+	// the parent category id
+	String value() default "";
 }

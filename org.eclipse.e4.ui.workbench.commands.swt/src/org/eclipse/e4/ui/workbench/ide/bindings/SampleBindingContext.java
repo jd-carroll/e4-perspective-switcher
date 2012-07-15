@@ -7,8 +7,8 @@ import org.eclipse.e4.ui.workbench.annotations.bindings.BindingContextParent;
 import org.eclipse.e4.ui.workbench.annotations.bindings.BindingContextTags;
 
 @BindingContext(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE)
-@BindingContextName(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE_NAME)
-@BindingContextDescription(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE_DESCRIPTION)
+@BindingContextName(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE$NAME)
+@BindingContextDescription(E4WorkbenchBindingConstants.BINDING_CONTEXT_SAMPLE$DESCRIPTION)
 @BindingContextParent(E4WorkbenchBindingConstants.BINDING_CONTEXT_ECLIPSE_DEFAULT)
 public class SampleBindingContext {
 	

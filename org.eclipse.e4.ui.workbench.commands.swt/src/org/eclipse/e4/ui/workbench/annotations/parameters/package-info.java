@@ -8,20 +8,9 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.commands.annotations;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import javax.inject.Qualifier;
-
-@Qualifier
-@Documented
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface CommandCategory {
-	String value() default "";
-}
+package org.eclipse.e4.ui.workbench.annotations.parameters;
+/**
+ * This package defines annotations for the creation of {@link MCommandParameter}'s, {@link MCoreExpression}'s,
+ * and {@link MParameter}'s programmatically through the use of {@link CommandsProcessor}.
+ * @author Joseph Carroll
+ */

@@ -8,9 +8,9 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.annotations.bindings;
+package org.eclipse.e4.ui.workbench.annotations.commands;
 /**
- * This package defines annotations for the creation of {@link MBindingContext}'s, {@link MBindingTable}'s,
- * and {@link MKeyBinding}'s programmatically through the use of {@link CommandsProcessor}.
+ * This package defines annotations for the creation of {@link MCommand}'s
+ * programmatically through the use of {@link CommandsProcessor}.
  * @author Joseph Carroll
  */

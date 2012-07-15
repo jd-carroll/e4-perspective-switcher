@@ -33,6 +33,7 @@ import org.eclipse.e4.ui.workbench.annotations.parameters.Parameter;
  * @see KeyBindingCommand
  * @see KeyBindingSequence
  * @see KeyBindingTags 
+ * @see Parameter
  */
 @Qualifier
 @Documented

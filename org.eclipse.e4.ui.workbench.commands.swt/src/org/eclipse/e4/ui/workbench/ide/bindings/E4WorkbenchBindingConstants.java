@@ -6,9 +6,9 @@ public class E4WorkbenchBindingConstants {
 
 	public static final String BINDING_CONTEXT_SAMPLE = "com.sample.ui.bindingcontext"; //$NON-NLS-1$
 	
-	public static final String BINDING_CONTEXT_SAMPLE_NAME = "In our dialogs and windows"; //$NON-NLS-1$
+	public static final String BINDING_CONTEXT_SAMPLE$NAME = "In our dialogs and windows"; //$NON-NLS-1$
 	
-	public static final String BINDING_CONTEXT_SAMPLE_DESCRIPTION = "some description of the context"; //$NON-NLS-1$
+	public static final String BINDING_CONTEXT_SAMPLE$DESCRIPTION = "some description of the context"; //$NON-NLS-1$
 	
 	public static final String BINDING_TABLE_SAMPLE = "com.sample.ui.bindingtable.sample"; //$NON-NLS-1$
 	

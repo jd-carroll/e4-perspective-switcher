@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.commands.annotations;
+package org.eclipse.e4.ui.workbench.annotations.commands;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,17 +18,30 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.commands.MCommand;
+import org.eclipse.e4.ui.model.application.commands.MCommandParameter;
+import org.eclipse.e4.ui.workbench.annotations.parameters.CommandParameter;
+
 /**
- * Specifies that the target is a command.  You must specify a 
- * command id in the value.
- * 
- * @author jcarroll
- *
+ * Use this annotation to tag types that define a {@link MCommand}. The annotation's
+ * value must return the command's id, otherwise the command is not created.
+ * <p>
+ * Instances of this type also accept one or more optional {@link MCommandParameter}. Each command 
+ * parameter must be defined as a separate field tagged with the annotation {@link CommandParameter}. 
+ * The field must be of type <code>String[]</code>.
+ * </p>
+ * @see CommandCategory
+ * @see CommandDescription
+ * @see CommandName
+ * @see CommandTags
+ * @see CommandParameter
+ * @required The ID is a required value. 
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command {
-	String value() default ""; // the command ID
+	// the command id
+	String value() default "";
 }

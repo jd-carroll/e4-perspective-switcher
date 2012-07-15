@@ -23,7 +23,21 @@ public interface E4WorkbenchCommandConstants {
 	 * category "Perspectives" (value is
 	 * <code>"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.perspectiveId"</code>).
 	 */
-	public static final String PERSPECTIVES_SHOW_PERSPECTIVE_PARM_ID = 
+	public static final String PERSPECTIVES_SHOW_PERSPECTIVE$_NAME = "Show Perspective"; //$NON-NLS-1$
+	
+	/**
+	 * Id for parameter "Perspective Id" in command "Show Perspective" in
+	 * category "Perspectives" (value is
+	 * <code>"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.perspectiveId"</code>).
+	 */
+	public static final String PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP = "Opens a new perspective or perspective dialog"; //$NON-NLS-1$
+    
+	/**
+	 * Id for parameter "Perspective Id" in command "Show Perspective" in
+	 * category "Perspectives" (value is
+	 * <code>"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.perspectiveId"</code>).
+	 */
+	public static final String PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_ID = 
 			"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.perspectiveId"; //$NON-NLS-1$
 
 	/**
@@ -32,6 +46,6 @@ public interface E4WorkbenchCommandConstants {
 	 * <code>"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.newWindow"</code>).
 	 * Optional.
 	 */
-	public static final String PERSPECTIVES_SHOW_PERSPECTIVE_PARM_NEWWINDOW = 
+	public static final String PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_WINDOW = 
 			"org.eclipse.e4.ui.perspectives.showPerspective.commandparamerter.newWindow"; //$NON-NLS-1$
 }

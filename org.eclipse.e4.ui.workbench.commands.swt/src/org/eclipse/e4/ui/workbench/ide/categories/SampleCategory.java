@@ -6,8 +6,8 @@ import org.eclipse.e4.ui.workbench.annotations.categories.CategoryName;
 import org.eclipse.e4.ui.workbench.annotations.categories.CategoryTags;
 
 @Category(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE)
-@CategoryName(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE_NAME)
-@CategoryDescription(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE_DESCRIPTION)
+@CategoryName(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE$NAME)
+@CategoryDescription(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE$DESCRIPTION)
 public class SampleCategory {
 
 	@CategoryTags
