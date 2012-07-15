@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.annotations.contributions;
+package org.eclipse.e4.ui.workbench.annotations.items;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,28 +18,27 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import org.eclipse.e4.ui.model.application.ui.menu.MToolBarContribution;
-import org.eclipse.e4.ui.workbench.annotations.items.DirectToolItem;
-import org.eclipse.e4.ui.workbench.annotations.items.HandledToolItem;
-import org.eclipse.e4.ui.workbench.annotations.items.MenuSeparator;
-import org.eclipse.e4.ui.workbench.annotations.items.ToolbarSeparator;
-import org.eclipse.e4.ui.workbench.annotations.tools.ToolControl;
+import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MDirectToolItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * Use this annotation to tag types that define a {@link MToolBarContribution}. The annotation's
- * value must return the contribution's id, otherwise the contribution is not created.
+ * Use this annotation to tag fields that define tags for a {@link MDirectMenuItem}, {@link MDirectToolItem} 
+ * {@link MHandledMenuItem}, or {@link MTHandledToolItem}. The tagged field must be of type <code>String[]</code>. 
+ * <p>
+ * This annotation must not be applied to more than one field per class. If several class
+ * fields are tagged with this annotation, only one of them will be used.
+ * </p>
+ * @see DirectMenuItem
  * @see DirectToolItem
+ * @see HandledMenuItem
  * @see HandledToolItem
- * @see MenuSeparator
- * @see ToolbarSeparator
- * @see ToolControl
- * @required The ID is a required value. 
  */
 @Qualifier
 @Documented
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ToolbarContribution {
-	// the toolbar contribution id
+public @interface ItemTags {
+	// reserved for future use
 	String value() default "";
 }

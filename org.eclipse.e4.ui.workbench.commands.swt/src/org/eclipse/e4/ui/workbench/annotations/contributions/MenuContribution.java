@@ -21,7 +21,8 @@ import javax.inject.Qualifier;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuContribution;
 import org.eclipse.e4.ui.workbench.annotations.items.DirectMenuItem;
 import org.eclipse.e4.ui.workbench.annotations.items.HandledMenuItem;
-import org.eclipse.e4.ui.workbench.annotations.items.Separator;
+import org.eclipse.e4.ui.workbench.annotations.items.MenuSeparator;
+import org.eclipse.e4.ui.workbench.annotations.items.ToolbarSeparator;
 import org.eclipse.e4.ui.workbench.annotations.menus.Menu;
 
 /**
@@ -30,7 +31,8 @@ import org.eclipse.e4.ui.workbench.annotations.menus.Menu;
  * @see Menu
  * @see DirectMenuItem
  * @see HandledMenuItem
- * @see Separator
+ * @see MenuSeparator
+ * @see ToolbarSeparator
  * @required The ID is a required value. 
  */
 @Qualifier
