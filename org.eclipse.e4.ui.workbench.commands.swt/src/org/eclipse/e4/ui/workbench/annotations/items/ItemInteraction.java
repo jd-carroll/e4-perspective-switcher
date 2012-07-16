@@ -18,28 +18,24 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
+import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MDirectToolItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * Use this annotation to tag types that define a {@link MHandledMenuItem}. The value returned by the 
- * annotation is the id for the handler. Supplying an id is not required but strongly encouraged.
- * @see ItemInteraction
- * @see ItemLabel
- * @see ItemMnemonics
- * @see ItemTooltip
- * @see ItemIcon
- * @see ItemEnabled
- * @see ItemSelected
- * @see ItemRender
- * @see ItemVisible
- * @see ItemAccessability
- * @see ItemTags
+ * Use this annotation to define the type of button for a {@link MDirectMenuItem}, {@link MDirectToolItem} 
+ * {@link MHandledMenuItem}, or {@link MTHandledToolItem}. The annotation returns the type of button. 
+ * @see DirectMenuItem
+ * @see DirectToolItem
+ * @see HandledMenuItem
+ * @see HandledToolItem
  */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface HandledMenuItem {
-	// the handled menu item id
-	String value() default "";
+public @interface ItemInteraction {
+	// the item type
+	ItemType value() default ItemType.PUSH;	
 }

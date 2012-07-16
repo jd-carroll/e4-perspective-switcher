@@ -23,7 +23,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MHandledToolItem;
 /**
  * Use this annotation to tag types that define a {@link MHandledToolItem}. The value returned by the 
  * annotation is the id for the handler. Supplying an id is not required but strongly encouraged.
- * @see ItemType
+ * @see ItemInteraction
  * @see ItemLabel
  * @see ItemMnemonics
  * @see ItemTooltip

@@ -22,8 +22,8 @@ public class ShowPerspectiveBinding {
 	public String[] tags = {"tag1", "tag2"};
 	
 	@Parameter(E4WorkbenchParameterConstants.PARAMETER_SHOW_PERSPECTIVE_BINDING)
-	@ParameterName(E4WorkbenchParameterConstants.PARAMETER_SHOW_PERSPECTIVE_BINDING_NAME)
-	@ParameterValue(E4WorkbenchParameterConstants.PARAMETER_SHOW_PERSPECTIVE_BINDING_VALUE)
+	@ParameterName(E4WorkbenchParameterConstants.PARAMETER_SHOW_PERSPECTIVE_BINDING$_NAME)
+	@ParameterValue(E4WorkbenchParameterConstants.PARAMETER_SHOW_PERSPECTIVE_BINDING$_VALUE)
 	@ParameterTags
 	public String[] parameter1 = {"param1", "param2"};
 }

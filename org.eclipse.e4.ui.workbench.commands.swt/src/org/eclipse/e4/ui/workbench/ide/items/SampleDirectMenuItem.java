@@ -10,25 +10,26 @@
  ******************************************************************************/ 
 package org.eclipse.e4.ui.workbench.ide.items;
 
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
 import org.eclipse.e4.ui.workbench.annotations.items.DirectMenuItem;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemAccessability;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemEnabled;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemIcon;
+import org.eclipse.e4.ui.workbench.annotations.items.ItemInteraction;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemLabel;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemMnemonics;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemRender;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemSelected;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemTags;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemTooltip;
-import org.eclipse.e4.ui.workbench.annotations.items.ItemType;
-import org.eclipse.e4.ui.workbench.annotations.items.ItemType.Type;
 import org.eclipse.e4.ui.workbench.annotations.items.ItemVisible;
 import org.eclipse.e4.ui.workbench.annotations.parameters.CoreExpression;
 import org.eclipse.e4.ui.workbench.annotations.parameters.CoreExpressionTags;
 import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 
 @DirectMenuItem(E4WorkbenchItemConstants.SAMPLE_MENU_ITEM)
-@ItemType(Type.Push)
+@ItemInteraction(ItemType.PUSH)
 @ItemLabel(E4WorkbenchItemConstants.SAMPLE_MENU_ITEM$_LABEL)
 @ItemMnemonics(E4WorkbenchItemConstants.SAMPLE_MENU_ITEM$_MNEMON)
 @ItemTooltip(E4WorkbenchItemConstants.SAMPLE_MENU_ITEM$_TIP)
@@ -47,4 +48,8 @@ public class SampleDirectMenuItem {
 	@CoreExpressionTags
 	public String[] tagsex = {"tag1", "tag2"};
 	
+	@Execute
+	public void doSomething() {
+		
+	}
 }

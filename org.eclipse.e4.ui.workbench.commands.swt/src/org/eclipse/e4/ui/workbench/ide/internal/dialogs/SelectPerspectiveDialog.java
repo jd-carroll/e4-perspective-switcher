@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.eclipse.e4.ui.workbench.ide.internal.dialogs;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -26,6 +25,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
+import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -264,9 +264,9 @@ public class SelectPerspectiveDialog extends Dialog implements
     @Override
     protected void okPressed() {
     	HashMap<String,String> parameters = new HashMap<String,String>(2);
-    	parameters.put(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_ID, 
+    	parameters.put(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID, 
     			((MPerspective) selection).getElementId());
-    	parameters.put(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE_PARM_NEWWINDOW,
+    	parameters.put(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW,
     			"false");
     	
 		ParameterizedCommand command = commandService

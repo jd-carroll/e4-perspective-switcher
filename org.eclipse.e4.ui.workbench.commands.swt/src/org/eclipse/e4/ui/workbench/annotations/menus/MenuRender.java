@@ -8,7 +8,7 @@
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
  ******************************************************************************/ 
-package org.eclipse.e4.ui.workbench.annotations.items;
+package org.eclipse.e4.ui.workbench.annotations.menus;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,24 +18,10 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
-import org.eclipse.e4.ui.model.application.ui.menu.MDirectToolItem;
-import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
-
-/**
- * Use this annotation to define the type of button for a {@link MDirectMenuItem}, {@link MDirectToolItem} 
- * {@link MHandledMenuItem}, or {@link MTHandledToolItem}. The annotation returns the type of button. 
- * @see DirectMenuItem
- * @see DirectToolItem
- * @see HandledMenuItem
- * @see HandledToolItem
- */
 @Qualifier
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ItemType {
-	// the item type
-	public enum Type { Check, Push, Radio }
-	Type value() default Type.Push;
+public @interface MenuRender {
+	boolean value() default false; // the menu ID
 }

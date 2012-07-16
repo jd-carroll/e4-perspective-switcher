@@ -30,6 +30,7 @@ import org.eclipse.e4.ui.workbench.annotations.handlers.HandlerPersistedState;
 import org.eclipse.e4.ui.workbench.annotations.handlers.HandlerTags;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.ide.internal.dialogs.SelectPerspectiveDialog;
+import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
@@ -42,8 +43,8 @@ public final class ShowPerspectiveHandler {
 
 	@Execute
 	public void execute(IEclipseContext context, 
-			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_ID) String perspectiveID,
-			@Optional @Named(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_PARAM$_WINDOW) String newWindow) 
+			@Optional @Named(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_ID) String perspectiveID,
+			@Optional @Named(E4WorkbenchParameterConstants.COMMAND_SHOW_PERSPECTIVE$_WINDOW) String newWindow) 
 					throws InvocationTargetException, InterruptedException {
 		
 		if (perspectiveID == null || perspectiveID.equals("")) 

@@ -11,6 +11,7 @@
 package org.eclipse.e4.ui.workbench.ide.tools;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -22,13 +23,14 @@ import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.log.Logger;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.commands.internal.util.E4WBCommandsActivator;
-import org.eclipse.e4.ui.workbench.commands.internal.util.ModelUtil;
 import org.eclipse.e4.ui.workbench.ide.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
@@ -60,7 +62,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.IWorkbenchCommandConstants;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 public class E4PerspectiveSwitcherToolControl {
 	public static final String PERSPECTIVE_SWITCHER_CONTROL_ID = "org.eclipse.e4.ui.PerspectiveSwitcher"; //$NON-NLS-1$
@@ -101,17 +104,191 @@ public class E4PerspectiveSwitcherToolControl {
 	//Image trimBackground;
 	Color containerCurveColor;
 	
+	// Control the selection & de-selection of the buttons in the perspective switcher
+	private EventHandler selectionHandler = new EventHandler() {
+		public void handleEvent(Event event) {
+			if (toolBar.isDisposed() || toolControl == null) // fail fast
+				return;
+
+			MUIElement changedElement = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+			if (!(changedElement instanceof MPerspectiveStack))
+				return;
+
+			// fail fast
+			MPerspectiveStack perspectiveStack = (MPerspectiveStack) changedElement;
+			if (!perspectiveStack.isToBeRendered())
+				return;
+			
+			// PerspectiveStack's in a snippet???
+			// The objective is to ensure we are changing the perspective at the right level
+			// Does the window with the perspective switcher actually contain the perspective, or
+			// does the window contain the window with the perspective????
+			// The better way is to utilize the model service and check the injected toolControl
+			// with the "nearest" toolControl to the changedElement.			
+			MWindow perspWin = modelService.getTopLevelWindowFor(perspectiveStack);
+			MWindow switcherWin = modelService.getTopLevelWindowFor(toolControl);
+			if (perspWin != switcherWin)
+				return;
+
+			MPerspective selectedElement = perspectiveStack.getSelectedElement();
+			for (ToolItem ti : toolBar.getItems()) {
+				// testing this way makes me nervous, yes all of the elements are coming
+				// from the same location, it still makes me nervous....
+				ti.setSelection(ti.getData() == selectedElement);
+			}
+		}
+	};
 	
+	// listens for changes to the perspective stack
+	private EventHandler toBeRenderedHandler = new EventHandler() {
+		public void handleEvent(Event event) {
+			if (toolControl == null || toolBar.isDisposed()) // fail fast
+				return;
+
+			MUIElement changedElement = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+			if (!(changedElement instanceof MPerspective))
+				return;
+
+			// fail fast - if the window isn't around why bother
+			MPerspective perspective = (MPerspective) changedElement;
+			if (!perspective.getParent().isToBeRendered())
+				return;
+			
+			// Same issue with the perspective stack...  A better way needs to be 
+			// implemented
+			MWindow perspWin = modelService.getTopLevelWindowFor(changedElement);
+			MWindow switcherWin = modelService.getTopLevelWindowFor(toolControl);
+			if (perspWin != switcherWin)
+				return;
+
+			if (changedElement.isToBeRendered())
+				addPerspectiveShortcut(perspective);
+			else
+				removePerspectiveShortcut(perspective);
+		}
+	};
+
+	private EventHandler labelHandler = new EventHandler() {
+		public void handleEvent(Event event) {
+			if (toolControl == null || toolBar.isDisposed()) // fail fast
+				return;
+
+			MUIElement changedElement = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+			if (!(changedElement instanceof MPerspective))
+				return;
+
+			// fail fast
+			MPerspective perspective = (MPerspective) changedElement;
+			if (!perspective.isToBeRendered())
+				return;
+
+			// same issue as above... 
+			MWindow perspWin = modelService.getTopLevelWindowFor(changedElement);
+			MWindow switcherWin = modelService.getTopLevelWindowFor(toolControl);
+			if (perspWin != switcherWin)
+				return;
+
+			String attName = (String) event.getProperty(UIEvents.EventTags.ATTNAME);
+			Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+			
+			for (ToolItem ti : toolBar.getItems()) {
+				// again uncomfortable... 
+				if (ti.getData() == perspective)
+					updateToolItem(ti, attName, newValue);
+			}
+
+			// update the layout
+			toolBar.pack();
+			toolBar.getShell().layout(new Control[] { toolBar }, SWT.DEFER);
+		}
+
+		// implement equivalent method for icon_uri	
+		private void updateToolItem(ToolItem ti, String attName, Object newValue) {
+			// wire up to new properties
+			boolean showText = true;
+			if (showText && UIEvents.UILabel.LABEL.equals(attName)) {
+				String newName = (String) newValue;
+				ti.setText(newName);
+			} else if (UIEvents.UILabel.TOOLTIP.equals(attName)) {
+				String newTTip = (String) newValue;
+				ti.setToolTipText(newTTip);
+			}
+		}
+	};
+
+	// listens for new 'PerspectiveStack's 
+	private EventHandler childrenHandler = new EventHandler() {
+		public void handleEvent(Event event) {
+			if (toolControl == null || toolBar.isDisposed()) // fail fast
+				return;
+
+			MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+			if (!(changedObj instanceof MPerspectiveStack))
+				return;
+			
+			/*
+			 * Consider the effects of the following...
+			 * 
+			 * // fail fast
+			 * MPerspectiveStack perspectiveStack = (MPerspectiveStack) changedElement;
+			 * if (!perspective.isToBeRendered())
+			 * 	return;
+			 */
+
+			// again same thing...
+			MWindow perspWin = modelService.getTopLevelWindowFor(changedObj);
+			MWindow switcherWin = modelService.getTopLevelWindowFor(toolControl);
+			if (perspWin != switcherWin)
+				return;
+
+			if (UIEvents.isADD(event)) {
+				for (Object o : UIEvents.asIterable(event, UIEvents.EventTags.NEW_VALUE)) {
+					MPerspective added = (MPerspective) o;
+					// Adding invisible elements is a NO-OP
+					if (!added.isToBeRendered())
+						continue;
+
+					addPerspectiveShortcut(added);
+				}
+			} else if (UIEvents.isREMOVE(event)) {
+				for (Object o : UIEvents.asIterable(event, UIEvents.EventTags.OLD_VALUE)) {
+					MPerspective removed = (MPerspective) o;
+					// Removing invisible elements is a NO-OP
+					if (!removed.isToBeRendered())
+						continue;
+
+					removePerspectiveShortcut(removed);
+				}
+			}
+		}
+	};
+
 	@PostConstruct
 	void init() {
-		// Subscribe to appropriate EventBroker events
+		// that's a lot of unnecessary events...
+		// investigate UIEvents.UIElement.Topic_All/Topic_Windows
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, toBeRenderedHandler);
+		// is it really necessary to have a separate topic to change the button... No.
+		// investigate piggy-backing onto toBeRenderedHandler (or similar)
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, selectionHandler);
 		
-		// Subsribe to property change events
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, childrenHandler);
+
+		
+		eventBroker.subscribe(UIEvents.UILabel.TOPIC_ALL, labelHandler);	
 	}
-	
+
 	@PreDestroy
 	void cleanUp() {
-		
+		if (perspectiveDialogImage != null) {
+			perspectiveDialogImage.dispose();
+			perspectiveDialogImage = null;
+		}
+
+		eventBroker.unsubscribe(toBeRenderedHandler);
+		eventBroker.unsubscribe(childrenHandler);
+		eventBroker.unsubscribe(selectionHandler);
+		eventBroker.unsubscribe(labelHandler);
 	}
 	
 	@PostConstruct
@@ -224,7 +401,10 @@ public class E4PerspectiveSwitcherToolControl {
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		// The perspectives currently open
-		MPerspectiveStack perspectiveStack = ModelUtil.getPerspectiveStack(modelService, window);
+		MPerspectiveStack perspectiveStack = null;
+		List<MPerspectiveStack> appPerspectives = modelService.findElements(window, null, MPerspectiveStack.class, null);
+		if (appPerspectives.size() > 0)
+			perspectiveStack = appPerspectives.get(0);
 		if (perspectiveStack != null) {
 			for (MPerspective perspective : perspectiveStack.getChildren()) {
 				if (perspective.isToBeRendered()) {
@@ -419,6 +599,10 @@ public class E4PerspectiveSwitcherToolControl {
 		// XXX: update the layout
 		toolBar.pack();
 		toolBar.getShell().layout(new Control[] { toolBar }, SWT.DEFER);
+	}
+	
+	private void removePerspectiveShortcut(MPerspective perspective) {
+		
 	}
 	
 	/**
