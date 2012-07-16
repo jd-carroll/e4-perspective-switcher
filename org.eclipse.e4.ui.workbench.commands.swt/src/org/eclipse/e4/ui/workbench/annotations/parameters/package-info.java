@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.parameters;
 /**
  * This package defines annotations for the creation of {@link MCommandParameter}'s, {@link MCoreExpression}'s,
- * and {@link MParameter}'s programmatically through the use of {@link CommandsProcessor}.
+ * and {@link MParameter}'s programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

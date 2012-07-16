@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.handlers;
 /**
  * This package defines annotations for the creation of {@link MHandler}'s
- * programmatically through the use of {@link CommandsProcessor}.
+ * programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

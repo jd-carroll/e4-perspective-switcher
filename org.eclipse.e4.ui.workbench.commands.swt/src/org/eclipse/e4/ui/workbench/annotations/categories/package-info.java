@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.categories;
 /**
  * This package defines annotations for the creation of {@link MCategory}'s
- * programmatically through the use of {@link CommandsProcessor}.
+ * programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

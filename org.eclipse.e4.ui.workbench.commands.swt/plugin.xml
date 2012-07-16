@@ -6,7 +6,7 @@
          point="org.eclipse.e4.workbench.model">
       <processor
             beforefragment="false"
-            class="org.eclipse.e4.ui.workbench.commands.util.CommandsProcessor">
+            class="org.eclipse.e4.ui.workbench.commands.util.ECommandParserService">
       </processor>
    </extension>
 

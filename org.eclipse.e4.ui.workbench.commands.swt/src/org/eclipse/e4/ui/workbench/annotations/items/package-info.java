@@ -12,6 +12,6 @@ package org.eclipse.e4.ui.workbench.annotations.items;
 /**
  * This package defines annotations for the creation of {@link MDirectMenuItem}'s, {@link MDirectToolItem}'s,
  * {@link MHandledMenuItem}'s, {@link MHandledToolItem}'s, {@link MMenuSeparator}'s, and {@link MToolBarSeparator}'s
- * programmatically through the use of {@link CommandsProcessor}.
+ * programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

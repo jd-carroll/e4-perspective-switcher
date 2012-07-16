@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.bindings;
 /**
  * This package defines annotations for the creation of {@link MBindingContext}'s, {@link MBindingTable}'s,
- * and {@link MKeyBinding}'s programmatically through the use of {@link CommandsProcessor}.
+ * and {@link MKeyBinding}'s programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

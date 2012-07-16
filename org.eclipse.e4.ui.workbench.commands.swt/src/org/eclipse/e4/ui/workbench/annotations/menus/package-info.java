@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.menus;
 /**
  * This package defines annotations for the creation of {@link MMenu}'s
- * programmatically through the use of {@link CommandsProcessor}.
+ * programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */

@@ -11,6 +11,6 @@
 package org.eclipse.e4.ui.workbench.annotations.contributions;
 /**
  * This package defines annotations for the creation of {@link MMenuContribution}'s, {@link MToolBarContribution}'s,
- * and {@link MTrimContribution}'s programmatically through the use of {@link CommandsProcessor}.
+ * and {@link MTrimContribution}'s programmatically through the use of {@link ECommandParserService}.
  * @author Joseph Carroll
  */
