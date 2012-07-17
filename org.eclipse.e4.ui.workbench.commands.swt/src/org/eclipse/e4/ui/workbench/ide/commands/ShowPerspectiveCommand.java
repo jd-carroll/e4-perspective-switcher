@@ -23,8 +23,8 @@ import org.eclipse.e4.ui.workbench.ide.categories.E4WorkbenchCategoryConstants;
 import org.eclipse.e4.ui.workbench.ide.parameters.E4WorkbenchParameterConstants;
 
 @Command(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE)
-@CommandName(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP)
-@CommandDescription(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP)
+//@CommandName(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP)
+//@CommandDescription(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIP)
 @CommandCategory(E4WorkbenchCategoryConstants.CATEGORY_EXAMPLE)
 public class ShowPerspectiveCommand {
 	

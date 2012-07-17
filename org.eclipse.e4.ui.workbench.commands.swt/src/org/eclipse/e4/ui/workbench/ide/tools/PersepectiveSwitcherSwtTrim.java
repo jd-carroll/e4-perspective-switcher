@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.ui.internal.workbench.WorkbenchLogger;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
@@ -41,7 +40,6 @@ import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.accessibility.AccessibleListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MenuEvent;
@@ -265,7 +263,6 @@ public class PersepectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl 
 		final Menu menu = new Menu(toolBar);
 		menu.setData(perspective);
 		
-		// perspective selected within perspective stack
 		MElementContainer<MUIElement> parentStack =  perspective.getParent();
 		boolean perspectiveSelected = parentStack.getSelectedElement() == perspective;
 		boolean perspectiveStackSelected = parentStack.getParent().getSelectedElement() == parentStack;
@@ -291,7 +288,7 @@ public class PersepectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl 
 			
 			@Override
 			public void menuShown(MenuEvent e) {
-
+				// do nothing
 			}
 			
 			@Override
@@ -519,18 +516,68 @@ public class PersepectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl 
 		final MenuItem menuItem = new MenuItem(menu, SWT.Activate);
 		menuItem.setText(E4WorkbenchCommandConstants.PERSPECTIVES_SAVE_AS$_NAME);
 		
+		// TODO: Integrate into help system
+		
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				ParameterizedCommand command = commandService
+						.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SAVE_AS, Collections.EMPTY_MAP);
+				handlerService.executeHandler(command);
+			}
+		});		
 	}
 	
 	private void addResetMenuItem(Menu menu) {
+		final MenuItem menuItem = new MenuItem(menu, SWT.Activate);
+		menuItem.setText(E4WorkbenchCommandConstants.PERSPECTIVES_RESET$_NAME);
 		
+		// TODO: Integrate into help system
+		
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				ParameterizedCommand command = commandService
+						.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_RESET, Collections.EMPTY_MAP);
+				handlerService.executeHandler(command);
+			}
+		});		
 	}
 	
 	private void addCloseMenuItem(Menu menu) {
+		final MenuItem menuItem = new MenuItem(menu, SWT.Activate);
+		menuItem.setText(E4WorkbenchCommandConstants.PERSPECTIVES_CLOSE$_NAME);
 		
+		// TODO: Integrate into help system
+		
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				ParameterizedCommand command = commandService
+						.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_CLOSE, Collections.EMPTY_MAP);
+				handlerService.executeHandler(command);
+			}
+		});		
 	}
 	
 	private void addShowTextMenuItem(Menu menu) {
+		final MenuItem menuItem = new MenuItem(menu, SWT.Activate | SWT.CHECK);
+		menuItem.setText(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_TEXT$_NAME);
 		
+		// TODO: Integrate into help system
+		
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				ParameterizedCommand command = commandService
+						.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_TEXT, Collections.EMPTY_MAP);
+				handlerService.executeHandler(command);
+			}
+		});		
 	}
 	
 }
