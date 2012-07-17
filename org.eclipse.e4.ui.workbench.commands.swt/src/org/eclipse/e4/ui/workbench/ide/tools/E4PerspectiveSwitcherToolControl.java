@@ -356,29 +356,7 @@ public class E4PerspectiveSwitcherToolControl {
 			}
 		});
 		
-		// TODO: Implement accessibility features & I10n
-		toolBar.getAccessible().addAccessibleListener(new AccessibleListener() {
-			
-			@Override
-			public void getName(AccessibleEvent e) {
-				
-			}
-			
-			@Override
-			public void getKeyboardShortcut(AccessibleEvent e) {
-				
-			}
-			
-			@Override
-			public void getHelp(AccessibleEvent e) {
-				
-			}
-			
-			@Override
-			public void getDescription(AccessibleEvent e) {
-				
-			}
-		});
+
 		
 		/// ////////////////////////////////////
 		/// Create the toolbar controls
