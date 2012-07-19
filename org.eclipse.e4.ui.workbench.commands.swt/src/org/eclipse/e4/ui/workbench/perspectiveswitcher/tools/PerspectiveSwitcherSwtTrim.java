@@ -213,7 +213,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		// The perspectives currently open
-		List<MPerspectiveStack> appPerspectiveStacks = modelService.findElements(window, null, MPerspectiveStack.class, null);
+		List<MPerspectiveStack> appPerspectiveStacks = E4Util.getMatchingChildren(window, MPerspectiveStack.class);
 		if (appPerspectiveStacks.size() > 0) {
 			for (MPerspectiveStack stack : appPerspectiveStacks)
 				for (MPerspective perspective : stack.getChildren()) {

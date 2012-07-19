@@ -16,9 +16,11 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.commands.MCategory;
 import org.eclipse.e4.ui.model.application.commands.MCommand;
+import org.eclipse.e4.ui.model.application.commands.MCommandParameter;
 import org.eclipse.e4.ui.model.application.commands.MCommandsFactory;
 import org.eclipse.e4.ui.model.application.commands.MHandler;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.E4WorkbenchCommandConstants;
+import org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.E4WorkbenchParameterConstants;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.handlers.ClosePerspectiveHandler;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.handlers.E4WorkbenchHandlerConstants;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.handlers.ResetPerspectiveHandler;
@@ -75,6 +77,7 @@ public class E4PerspectiveSwitcherProcessor {
 			resetHandler.setElementId(E4WorkbenchHandlerConstants.PERSPECTIVES_RESET);
 			resetHandler.setCommand(resetCommand);
 			resetHandler.setContributionURI(E4PerspectiveSwitcherActivator.getDefault().getResourceURI(ResetPerspectiveHandler.class));
+			application.getHandlers().add(resetHandler);
 		}
 		
 		{ // Close command & handler definition
@@ -108,9 +111,10 @@ public class E4PerspectiveSwitcherProcessor {
 			showTextHandler.setElementId(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_TEXT);
 			showTextHandler.setCommand(showTextCommand);
 			showTextHandler.setContributionURI(E4PerspectiveSwitcherActivator.getDefault().getResourceURI(ShowTextPerspectiveHandler.class));
+			application.getHandlers().add(showTextHandler);
 		}
 		
-		{ // Show Perspective command & handler
+		{ // Show Perspective command & handler with properties
 			MCommand showPerspectiveCommand = commandsFactory.createCommand();
 			showPerspectiveCommand.setContributorURI(contributorURI);
 			showPerspectiveCommand.setElementId(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
@@ -119,12 +123,33 @@ public class E4PerspectiveSwitcherProcessor {
 			showPerspectiveCommand.setDescription(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIPTION);
 			application.getCommands().add(showPerspectiveCommand);
 			
+			MCommandParameter parameterPerspectiveId = commandsFactory.createCommandParameter();
+			parameterPerspectiveId.setContributorURI(contributorURI);
+			parameterPerspectiveId.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID);
+			parameterPerspectiveId.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_NAME);
+			parameterPerspectiveId.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterPerspectiveId);
+			
+			MCommandParameter parameterWindow = commandsFactory.createCommandParameter();
+			parameterWindow.setContributorURI(contributorURI);
+			parameterWindow.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW);
+			parameterWindow.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_NAME);
+			parameterWindow.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterWindow);
+			
+			MCommandParameter parameterNewWindow = commandsFactory.createCommandParameter();
+			parameterNewWindow.setContributorURI(contributorURI);
+			parameterNewWindow.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW);
+			parameterNewWindow.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_NAME);
+			parameterNewWindow.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterNewWindow);
+			
 			MHandler showTextHandler = commandsFactory.createHandler();
 			showTextHandler.setContributorURI(contributorURI);
 			showTextHandler.setElementId(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
 			showTextHandler.setCommand(showPerspectiveCommand);
 			showTextHandler.setContributionURI(E4PerspectiveSwitcherActivator.getDefault().getResourceURI(ShowPerspectiveHandler.class));
-			
+			application.getHandlers().add(showTextHandler);
 		}
 	}
 	

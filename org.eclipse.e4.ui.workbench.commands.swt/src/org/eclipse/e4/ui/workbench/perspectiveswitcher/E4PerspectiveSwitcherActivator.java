@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class E4PerspectiveSwitcherActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.swt"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.e4.ui.workbench.perspectiveswitcher"; //$NON-NLS-1$
 	
 	public static final String RESOURCE_SCHEMA = "bundleclass://"; //$NON-NLS-1$
 	public static final String RESOURCE_SEPARATOR = "/"; //$NON-NLS-1$

@@ -27,7 +27,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_WaEAfswnEeG9lcsAMdUpIA" label="About" command="_WaEAdMwnEeG9lcsAMdUpIA"/>
       </children>
     </mainMenu>
-    <windows xsi:type="basic:TrimmedWindow" xmi:id="_Ks1kMM9cEeGra8XwJ799Rw" elementId="com.sample.application.trimmedwindow.0">
+    <windows xsi:type="basic:TrimmedWindow" xmi:id="_Ks1kMM9cEeGra8XwJ799Rw" elementId="com.sample.application.trimmedwindow.0" visible="false">
       <children xsi:type="advanced:PerspectiveStack" xmi:id="_LdV0EM9cEeGra8XwJ799Rw" elementId="com.sample.application.perspectivestack.0">
         <children xsi:type="advanced:Perspective" xmi:id="_L0Wl4M9cEeGra8XwJ799Rw" elementId="com.sample.application.perspective.0"/>
         <children xsi:type="advanced:Perspective" xmi:id="_NOFY8M9cEeGra8XwJ799Rw" elementId="com.sample.application.perspective.0"/>
@@ -44,7 +44,7 @@
       <children xsi:type="menu:ToolControl" xmi:id="_dhPWAMz5EeG6GL6oNvg_7A" elementId="Spacer Glue" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.LayoutModifierToolControl">
         <tags>glue</tags>
       </children>
-      <children xsi:type="menu:ToolControl" xmi:id="_eAs5MMz5EeG6GL6oNvg_7A" elementId="PerspectiveSwitcher" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.perspectiveswticher/org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.PerspectiveSwitcherSwtTrim"/>
+      <children xsi:type="menu:ToolControl" xmi:id="_eAs5MMz5EeG6GL6oNvg_7A" elementId="PerspectiveSwitcher" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.perspectiveswitcher/org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.PerspectiveSwitcherSwtTrim"/>
     </trimBars>
   </children>
   <handlers xmi:id="_WaEAa8wnEeG9lcsAMdUpIA" contributionURI="bundleclass://com.sample.application/com.sample.application.handlers.QuitHandler" command="_WaEAaswnEeG9lcsAMdUpIA"/>
