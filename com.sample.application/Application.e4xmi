@@ -44,7 +44,7 @@
       <children xsi:type="menu:ToolControl" xmi:id="_dhPWAMz5EeG6GL6oNvg_7A" elementId="Spacer Glue" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.LayoutModifierToolControl">
         <tags>glue</tags>
       </children>
-      <children xsi:type="menu:ToolControl" xmi:id="_eAs5MMz5EeG6GL6oNvg_7A" elementId="PerspectiveSwitcher" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.commands.swt/org.eclipse.e4.ui.workbench.ide.tools.E4PerspectiveSwitcherToolControl"/>
+      <children xsi:type="menu:ToolControl" xmi:id="_eAs5MMz5EeG6GL6oNvg_7A" elementId="PerspectiveSwitcher" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.perspectiveswticher/org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.PerspectiveSwitcherSwtTrim"/>
     </trimBars>
   </children>
   <handlers xmi:id="_WaEAa8wnEeG9lcsAMdUpIA" contributionURI="bundleclass://com.sample.application/com.sample.application.handlers.QuitHandler" command="_WaEAaswnEeG9lcsAMdUpIA"/>
