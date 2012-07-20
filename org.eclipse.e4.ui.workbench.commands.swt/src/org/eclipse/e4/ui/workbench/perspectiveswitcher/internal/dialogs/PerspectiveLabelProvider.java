@@ -18,11 +18,10 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.core.services.translation.TranslationService;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.E4PerspectiveSwitcherActivator;
+import org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.E4Util;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -50,7 +49,6 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
 	 * Indicates whether the default perspective is visually marked.
 	 */
 	private boolean markActive = true;
-	
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object)
@@ -111,12 +109,8 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
 			if (_lbl != null && !_lbl.equals(""))
 				label = _lbl;			
 			
-			MElementContainer<MUIElement> parentStack = perspective.getParent();
-			boolean perspectiveSelected = perspective == parentStack.getSelectedElement();
-			boolean parentStackSelected = parentStack == parentStack.getParent().getSelectedElement();
-			
-			if (markActive && perspectiveSelected && parentStackSelected) {
-				label = label + "  (" + translationService.translate("active", 
+			if (markActive && E4Util.isSelectedElement(perspective)) {
+				label = label + "\t(" + translationService.translate("active", 
 						"platform:/plugin/" + E4PerspectiveSwitcherActivator.PLUGIN_ID) + ")"; //$NON-NLS-1$
 			}
 		}
@@ -138,4 +132,5 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
 	public final String getColumnText(Object element, int columnIndex) {
 		return getText(element);
 	}
+
 }

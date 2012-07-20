@@ -24,8 +24,6 @@ import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.core.services.log.Logger;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
@@ -263,12 +261,8 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 	void openMenuFor(ToolItem item, MPerspective perspective) {
 		final Menu menu = new Menu(toolBar);
 		menu.setData(perspective);
-		
-		MElementContainer<MUIElement> parentStack =  perspective.getParent();
-		boolean perspectiveSelected = parentStack.getSelectedElement() == perspective;
-		boolean parentStackSelected = parentStack.getParent().getSelectedElement() == parentStack;
-		
-		if (perspectiveSelected && parentStackSelected) {
+				
+		if (E4Util.isSelectedElement(perspective)) {
 			addSaveAsMenuItem(menu);
 			addResetMenuItem(menu);
 		}
@@ -333,25 +327,19 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 			shortcut.setToolTipText(perspective.getLocalizedLabel());
 		}
 		
-		MElementContainer<MUIElement> parentStack = perspective.getParent();
-		boolean perspectiveSelected = perspective == parentStack.getSelectedElement();
-		boolean parentStackSelected = parentStack == parentStack.getParent().getSelectedElement();
-		shortcut.setSelection(perspectiveSelected && parentStackSelected);
+		shortcut.setSelection(E4Util.isSelectedElement(perspective));
 		
 		shortcut.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				MPerspective perspective = (MPerspective) event.widget.getData();
-				MElementContainer<MUIElement> parentStack =  perspective.getParent();
-				parentStack.setSelectedElement(perspective);
-				// set the perspective stack as the selected perspective stack
-				parentStack.getParent().setSelectedElement(parentStack);
+				E4Util.setWindowSelectedElement(perspective);
 			}
 		});
 		
 		// update the layout ???
-
+		
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 
 public class E4Util {
 	
@@ -28,6 +29,40 @@ public class E4Util {
 		}		
 		
 		return matchingChildren;
+	}
+	
+	/**
+	 * Recursively sets the active selection to the element until it reaches the 
+	 * containing window.
+	 * 
+	 * @param element the new selected element
+	 */
+	public static void setWindowSelectedElement(MUIElement element) {
+		MElementContainer<MUIElement> parent = element.getParent();
+		parent.setSelectedElement(element);
+		if (!((MUIElement) parent instanceof MWindow))
+			setWindowSelectedElement(parent);
+	}
+	
+	/**
+	 * Recursively checks if the active selection of the parent is the <tt>element</tt>, 
+	 * until the containing window element is reached. Returns true if the selected
+	 * element is the parameter in the window and false otherwise.
+	 *  
+	 * @param element the model element to check
+	 * @return true if the model element is the selected element 
+	 * 			false otherwise
+	 */
+	public static boolean isSelectedElement(MUIElement element) {
+		MElementContainer<MUIElement> parent = element.getParent();
+		if (parent.getSelectedElement() == element) {
+			if (!((MUIElement) parent instanceof MWindow))
+				return isSelectedElement(parent);
+			else
+				return true;
+		}	
+		
+		return false;
 	}
 
 }
