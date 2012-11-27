@@ -17,7 +17,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.services;bundle-version="0.10.1",
  org.eclipse.e4.core.di.extensions;bundle-version="0.11.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.annotation;version="1.0.0",
  javax.inject;version="1.0.0",
  org.osgi.service.event;version="1.2.0"
@@ -26,3 +25,4 @@ Export-Package: org.eclipse.e4.ui.workbench.perspectiveswitcher.commands,
  org.eclipse.e4.ui.workbench.perspectiveswitcher.tools
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
